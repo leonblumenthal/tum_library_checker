@@ -2,7 +2,7 @@ import os
 
 from dotenv import load_dotenv
 
-from crawler import Crawler
+from crawler.crawler import Crawler
 
 
 def run():
