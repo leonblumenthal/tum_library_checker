@@ -19,7 +19,7 @@ source venv/bin/activate
 
 Install requirements.
 ```
-pip install -r requirements
+pip install -r requirements.txt
 ```
 
 (optional) 
@@ -32,7 +32,7 @@ URL="https://www.ub.tum.de/en/reserve-study-desks"
 DATA_PATH="data"
 ```
 
-Run the crawler once.
+Run the crawler once. The CSV is saved in the data path directory.
 ```
 python run_crawler.py
 ```
