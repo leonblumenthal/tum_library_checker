@@ -3,3 +3,4 @@ beautifulsoup4
 python-dotenv
 pandas
 plotly
+kaleido
