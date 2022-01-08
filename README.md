@@ -23,7 +23,7 @@ pip install -r requirements.txt
 ```
 
 (optional) 
-Create a custom .env file and edit it (otherwise, default values are used).
+Create a custom *.env* file and edit it (otherwise, default values are used).
 ```
 cp template.env .env
 ```
@@ -37,7 +37,7 @@ Run the crawler once. The CSV is saved in the data path directory.
 python run_crawler.py
 ```
 
-(optional) Create a cron job that runs the crawler periodically
+(optional) Create a cron job that runs the crawler periodically.
 ```
 * * * * * REPO_PATH/venv/bin/python REPO_PATH/run_crawler.py
 ```
