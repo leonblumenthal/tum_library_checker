@@ -6,7 +6,9 @@ This repository contains a crawler to save bookings for [TUM libraries](https://
 
 Sample data from *2021-12-11* to *2022-01-08* can be found [here](./sample_data). The data is very diverse due to the Christmas break.
 
-A quick visualization can be found in [this notebook](./analysis.ipynb).
+The quick vizualization below can be found in [this notebook](./analysis.ipynb).
+
+![plot](./analysis.svg)
 
 
 ## How to run
@@ -43,6 +45,7 @@ python run_crawler.py
 ```
 * * * * * REPO_PATH/venv/bin/python REPO_PATH/run_crawler.py
 ```
+
 
 ## TODO
 
