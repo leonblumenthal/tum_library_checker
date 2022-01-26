@@ -31,6 +31,7 @@ class Crawler:
             bookings = scraping.scrape_bookings(self.url)
         except Exception as e:
             print(e)
+            return
 
         if not bookings:
             return
