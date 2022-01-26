@@ -11,6 +11,8 @@ def _table_row_to_booking(row: Tag) -> Booking:
 
     library, date, period = (c.text.strip() for c in cols[:3])
     link = cols[-1].find('a')
+    if link:
+        link = link['href'].split('/')[-1]
     day = datetime.datetime.strptime(date.split(',')[1], ' %d. %B %Y').date()
     start, _, end = period.split()
     period = datetime.time.fromisoformat(start), datetime.time.fromisoformat(end)
