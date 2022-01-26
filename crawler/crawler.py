@@ -1,11 +1,7 @@
-import datetime
 import os
 import time
 
-import requests
-from bs4 import BeautifulSoup
-from bs4.element import Tag
-
+from . import scraping
 from .models import Booking
 from .short import LibraryShortener
 
@@ -19,10 +15,25 @@ class Crawler:
         self.csv_path = os.path.join(data_path, 'bookings.csv')
         self.shortener = LibraryShortener(path=os.path.join(data_path, 'shorts.txt'))
 
-    def run(self):
-        """Crawl bookings and save them in csv."""
+    def run(self, timespan: float = 0.1, cooldown: float = 0):
+        """
+        Crawl bookings and save them in csv.
+        Run for timespan seconds and sleep cooldown seconds after each run.
+        """
 
-        bookings = self._crawl_bookings()
+        start_time = time.time()
+        while time.time() <= start_time + timespan:
+            self._run_once()
+            time.sleep(cooldown)
+
+    def _run_once(self):
+        try:
+            bookings = scraping.scrape_bookings(self.url)
+        except Exception as e:
+            print(e)
+
+        if not bookings:
+            return
 
         # Create data path directory before using
         # the shortener and creating the csv file.
@@ -41,32 +52,7 @@ class Crawler:
             for row in csv_rows:
                 f.write(row + '\n')
 
-    def _crawl_bookings(self) -> list[Booking]:
-        html = requests.get(self.url).content
-
-        # Parse reservation table rows from html.
-        soup = BeautifulSoup(html, 'html.parser')
-        view = soup.find(class_='view-resevierungen-lesesaal')
-        table_body = view.find(class_='view-content').find('tbody')
-        rows = table_body.find_all('tr')
-
-        bookings = [self._table_row_to_booking(row) for row in rows]
-
-        return bookings
-
-    @staticmethod
-    def _table_row_to_booking(row: Tag) -> Booking:
-        cols = row.find_all('td')
-
-        library, date, period = (c.text.strip() for c in cols[:3])
-        link = cols[-1].find('a')
-        day = datetime.datetime.strptime(date.split(',')[1], ' %d. %B %Y').date()
-        start, _, end = period.split()
-        period = datetime.time.fromisoformat(start), datetime.time.fromisoformat(end)
-
-        booking = Booking(library, day, period, link)
-
-        return booking
+        print(current_time)
 
     def _booking_to_csv_row(self, booking: Booking, current_time: int) -> str:
         library = self.shortener.shorten(booking.library)

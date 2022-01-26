@@ -1,11 +1,12 @@
 import os
+from argparse import ArgumentParser
 
 from dotenv import load_dotenv
 
 from crawler.crawler import Crawler
 
 
-def run():
+def run(timespan: float, cooldown: float):
     """Run crawler"""
 
     load_dotenv()
@@ -15,8 +16,12 @@ def run():
 
     crawler = Crawler(url, data_path)
 
-    crawler.run()
+    crawler.run(timespan, cooldown)
 
 
 if __name__ == '__main__':
-    run()
+    parser = ArgumentParser()
+    parser.add_argument('timespan', type=float)
+    parser.add_argument('cooldown', type=float)
+    args = parser.parse_args()
+    run(args.timespan, args.cooldown)
