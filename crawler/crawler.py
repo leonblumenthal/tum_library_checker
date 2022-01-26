@@ -59,6 +59,6 @@ class Crawler:
         period_end = str(booking.period[1])[:-3]
         bookable = int(booking.link is not None)
 
-        row = f'{current_time:.0f};{library};{booking.day};{period_start};{period_end};{bookable}'
+        row = f'{current_time:.1f};{library};{booking.day};{period_start};{period_end};{bookable}'
 
         return row
