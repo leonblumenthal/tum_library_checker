@@ -53,8 +53,6 @@ class Crawler:
             for row in csv_rows:
                 f.write(row + '\n')
 
-        print(current_time)
-
     def _booking_to_csv_row(self, booking: Booking, current_time: int) -> str:
         library = self.shortener.shorten(booking.library)
         period_start = str(booking.period[0])[:-3]
